@@ -51,7 +51,22 @@ body {
 }
 
 .logo p {
-    color: #666;
+    color: #666;.telegram-btn {
+    display: inline-block;
+    background: #0088cc;
+    color: white !important;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 20px 0;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.telegram-btn:hover {
+    background: #0077b5;
+    transform: translateY(-2px);
+}
     font-size: 14px;
 }
 
