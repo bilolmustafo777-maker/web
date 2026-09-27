@@ -16,63 +16,29 @@
             
             <div class="login-content">
                 <h2>Telegram orqali kirish</h2>
-                <p>Tezkor va xavfsiz kirish uchun Telegram tugmasini bosing.</p>
+                <p>Bot'ni oching va /start bosing.</p>
                 
-                <!-- Telegram Login Widget -->
-                <script async src="https://telegram.org/js/telegram-widget.js?22" 
-                        data-telegram-login="taxi7075uzbot" 
-                        data-size="large"
-                        data-userpic="true"
-                        data-radius="10"
-                        data-auth-url="login"
-                        data-request-access="write"></script>
-                
-                <div class="divider">yoki</div>
+                <!-- Telegram bot link (to'g'ri yechim) -->
+                <a href="https://t.me/Taxi7075uzbot?start=web_login" 
+                   class="btn-primary telegram-btn">
+                    🤖 Telegram Bot'ni Oching
+                </a>
                 
                 <p class="info-text">
-                    Agar Telegram'da bot'ni ochmasangiz: 
-                    <a href="http://t.me/Taxi7075uzbot" target="_blank">@Taxi7075uzbot</a>'ni bosing
+                    Bot'da ro'yxatdan o'tgandan keyin, web saytga avtomatik qaytarsiz.
                 </p>
             </div>
         </div>
     </div>
-    
+
     <script>
-        // Telegram widget'dan redirect qilganda
-        window.addEventListener('message', (event) => {
-            if (event.data && event.data.type === 'LOGIN_DATA') {
-                // Data backend'ga yubor
-                fetch('/api/auth/telegram', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(event.data.data)
-                })
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = '/dashboard';
-                    }
-                })
-                .catch(e => alert('Xato: ' + e.message));
-            }
-        });
-        
-        // Alternative: Manual Telegram login qo'lda
-        function onTelegramAuth(user) {
-            fetch('/api/auth/telegram', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(user)
-            })
-            .then(r => r.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = '/dashboard';
-                } else {
-                    alert('Autentifikatsiya xatosi');
-                }
-            })
-            .catch(e => alert('Xato: ' + e.message));
+        // Bot'dan web sayt'ga redirect qilish uchun
+        // (Bot'da /start handler qo'lda redirect link) 
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('tg_id')) {
+            // Simple session qo'ying
+            document.cookie = `session_tg_id=${params.get('tg_id')}; path=/;`;
+            window.location.href = '/dashboard';
         }
     </script>
 </body>
