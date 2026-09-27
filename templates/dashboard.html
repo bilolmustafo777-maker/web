@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7075.uz Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="dashboard-page">
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo-text">🚖 7075.uz</h1>
+            <div class="nav-menu">
+                <a href="#announcements" class="nav-link">E'lonlar</a>
+                <a href="#my-bookings" class="nav-link">Buyurtmalarim</a>
+                <a href="#profile" class="nav-link">Profil</a>
+                <button onclick="logout()" class="btn-logout">Chiqish</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- E'lonlar bo'limi -->
+        <section id="announcements" class="section">
+            <h2>📍 Taksi e'lonlari</h2>
+            
+            <div class="filters">
+                <select id="filter-from" class="select-input">
+                    <option value="">Qayerdan</option>
+                    <option value="Termiz">Termiz</option>
+                    <option value="Toshkent">Toshkent</option>
+                    <option value="Samarqand">Samarqand</option>
+                    <option value="Buxoro">Buxoro</option>
+                </select>
+                
+                <select id="filter-to" class="select-input">
+                    <option value="">Qayerga</option>
+                    <option value="Termiz">Termiz</option>
+                    <option value="Toshkent">Toshkent</option>
+                    <option value="Samarqand">Samarqand</option>
+                    <option value="Buxoro">Buxoro</option>
+                </select>
+                
+                <button onclick="loadAnnouncements()" class="btn-primary">Qidirish</button>
+            </div>
+            
+            <div id="announcements-list" class="announcements-list">
+                <p class="loading">Yuklanmoqda...</p>
+            </div>
+        </section>
+
+        <!-- Buyurtmalar bo'limi -->
+        <section id="my-bookings" class="section">
+            <h2>📄 Mening buyurtmalarim</h2>
+            <div id="bookings-list" class="bookings-list">
+                <p class="loading">Yuklanmoqda...</p>
+            </div>
+        </section>
+
+        <!-- Profil bo'limi -->
+        <section id="profile" class="section">
+            <h2>👤 Profil</h2>
+            <div id="profile-info" class="profile-info">
+                <p class="loading">Yuklanmoqda...</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal - Joy band qilish -->
+    <div id="booking-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeBookingModal()">&times;</span>
+            <h3>Joy band qilish</h3>
+            <form id="booking-form">
+                <input type="hidden" id="booking-ann-id">
+                
+                <label>Nechta joy?</label>
+                <select id="booking-seats" class="select-input" required>
+                    <option value="1">1 joy</option>
+                    <option value="2">2 joy</option>
+                    <option value="3">3 joy</option>
+                    <option value="4">4 joy</option>
+                </select>
+                
+                <p class="deposit-info">💳 Garov puli: <strong>35,000 so'm</strong></p>
+                
+                <button type="submit" class="btn-primary">Band qilish</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

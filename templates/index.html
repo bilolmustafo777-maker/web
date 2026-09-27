@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7075.uz - Taksi</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <h1>🚖 7075.uz</h1>
+                <p>Taksi va yo'lovchilarni bog'laydigan xizmat</p>
+            </div>
+            
+            <div class="login-content">
+                <h2>Telegram orqali kirish</h2>
+                <p>Tezkor va xavfsiz kirish uchun Telegram tugmasini bosing.</p>
+                
+                <!-- Telegram Login Widget -->
+                <script async src="https://telegram.org/js/telegram-widget.js?22" 
+                        data-telegram-login="7075_uz_bot" 
+                        data-size="large"
+                        data-userpic="true"
+                        data-radius="10"
+                        data-auth-url="login"
+                        data-request-access="write"></script>
+                
+                <div class="divider">yoki</div>
+                
+                <p class="info-text">
+                    Agar Telegram'da bot'ni ochmasangiz: 
+                    <a href="https://t.me/7075_uz_bot" target="_blank">@7075_uz_bot</a>'ni bosing
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Telegram widget'dan redirect qilganda
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'LOGIN_DATA') {
+                // Data backend'ga yubor
+                fetch('/api/auth/telegram', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(event.data.data)
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/dashboard';
+                    }
+                })
+                .catch(e => alert('Xato: ' + e.message));
+            }
+        });
+        
+        // Alternative: Manual Telegram login qo'lda
+        function onTelegramAuth(user) {
+            fetch('/api/auth/telegram', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(user)
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Autentifikatsiya xatosi');
+                }
+            })
+            .catch(e => alert('Xato: ' + e.message));
+        }
+    </script>
+</body>
+</html>
